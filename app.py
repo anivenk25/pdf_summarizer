@@ -36,8 +36,14 @@ def main():
         sentences = sent_tokenize(full_text)
         input_text = " ".join(sentences)
 
-        model = Summarizer()
-        summarized_text = model(input_text, ratio=ratio)
+        try:
+            # Use the bert-extractive-summarizer as an alternative
+            from summarizer import Summarizer
+            model = Summarizer()
+            summarized_text = model(input_text, ratio=ratio)
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
+            return
 
         # Display the summarized text with improved readability
         st.subheader("Summarized Text:")
